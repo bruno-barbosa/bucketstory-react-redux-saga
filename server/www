@@ -1,0 +1,18 @@
+import http   from 'http'
+import _debug from 'debug'
+import dotenv from 'dotenv'
+
+import app from './main'
+import config from '../tools/config'
+
+const debug  = _debug('server:www')
+
+const host   = config.server_host
+const port   = config.server_port
+const server = http.createServer(app)
+
+dotenv.config()
+
+server.listen(port)
+debug(`Server is now running at http://${host}:${port}.`)
+debug(`Server accessible via localhost:${port} if you are using the project defaults.`)

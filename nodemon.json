@@ -1,0 +1,4 @@
+{
+  "verbose": false,
+  "ignore": ["client", "coverage", "node_modules"]
+}

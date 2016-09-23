@@ -1,0 +1,6 @@
+// Note: These options are needed for babel-node to compile server code
+
+{
+  "presets": ["es2015", "react", "stage-0"],
+  "plugins": ["transform-runtime"]
+}
