@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/bruno-barbosa/bucketstory-react-redux-saga"
   },
   "scripts": {
     "clean": "rimraf client/dist",
@@ -35,7 +35,7 @@
       }
     },
     "dev": {
-      "command": "nodemon --exec ./node_modules./bin/babel-node server/www --ignore dist --ignore coverage --ignore tests --ignore src",
+      "command": "nodemon --exec ./node_modules/.bin/babel-node server/www --ignore dist --ignore coverage --ignore tests --ignore src",
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "app:*"
@@ -62,7 +62,7 @@
       }
     },
     "start": {
-      "command": "./node_modules/.bin/babel-node server/www",
+      "command":"nodemon --exec ./node_modules/.bin/babel-node server/www --ignore dist --ignore coverage --ignore tests --ignore src",
       "env": {
         "DEBUG": "app:*"
       }
