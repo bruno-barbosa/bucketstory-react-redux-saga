@@ -1,0 +1,12 @@
+/*
+Application Settings Go Here
+------------------------------------
+This file acts as a bundler for all variables/mixins/themes, so they
+can easily be swapped out without `core.scss` ever having to know.
+*/
+
+// Imports material design framework
+@import  '~react-mdl/extra/material';
+
+// Imports variables
+@import './variables/colors';

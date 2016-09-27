@@ -1,0 +1,11 @@
+@import '../../styles/base';
+
+.app-container {
+  min-height: 100%;
+  min-width: 100%;
+  background-color: #f5f5f5;
+  position: relative;
+  top: 0;
+  bottom: 100%;
+  z-index: 1;
+}

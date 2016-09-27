@@ -1,0 +1,92 @@
+@import '../../styles/base';
+
+.auth-dialog__container {
+  width: 600px;
+  height: 400px;
+}
+
+.auth-tab__container {
+  margin-top: 10% !important;
+}
+
+.auth-tab__social {
+  text-transform: none;
+  font-weight: 500;
+  color: #ffffff;
+  width: 225px;
+  margin-left: 16%;
+  margin-bottom: 10%;
+  border: 0px;
+}
+
+.auth-tab__social-icon {
+  display: block;
+  position: absolute;
+  text-align: center;
+  text-height: 50px;
+  font-size: 15px;
+  left: 0px;
+  width: 20%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.auth-tab__social-text {
+  display: block;
+  position: relative;
+  text-align: left;
+  padding: 0px 0px 15px 40px;
+}
+
+.auth-tab__social-google {
+  background-color: #d34836;
+}
+
+.auth-tab__social-facebook {
+  background-color: #3b5998;
+}
+
+.auth-tab__social-twitter {
+  background-color: #00aced;
+}
+
+
+.auth-tab__button-close {
+  float: right;
+}
+
+.auth-tab__button-success {
+  color: #ffffff;
+  top: 25px;
+  background-color: #4caf50;
+}
+
+.auth-tab__button-success:hover {
+  background-color: #66bb6a;
+}
+
+.auth-tab__button-error {
+  color: #ffffff;
+  top: 25px;
+  background-color: #ef5350 ;
+}
+
+.auth-tab__button-error:hover {
+  background-color: #e57373 !important;
+}
+
+.auth-divider {
+  position: absolute;
+  width: 1px;
+  height: 65%;
+  left: 50%;
+  background: #e0e0e0;
+}
+
+.auth-divider::before {
+  content: 'or';
+  position: absolute;
+  top: 110px;
+  left: -7px;
+  background: white;
+  color: #222222;
+}

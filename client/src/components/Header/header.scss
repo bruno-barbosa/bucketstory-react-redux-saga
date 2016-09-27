@@ -1,0 +1,45 @@
+@import '../../styles/base';
+
+.header-navigation {
+  background-color: white !important;
+  margin: 0 !important;
+}
+
+.header-link {
+  color: $accent3Grey !important;
+  font-weight: 700;
+}
+
+.header-link:hover {
+  border-bottom: 4px solid $primaryIndigo;
+}
+
+.header-link__active {
+  color: $primaryIndigo !important;
+  text-decoration: none;
+}
+
+.header-button {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 32px !important;
+  color: $primaryIndigo !important;
+  border: 1px solid $primaryIndigo !important;
+  border-radius: 2px !important;
+}
+
+.header-button:hover {
+  color: white !important;
+  background-color: $primaryIndigo !important;
+}
+
+.header-logo {
+  position: absolute;
+  margin: 1% 0 0 0;
+  height: auto !important;
+  width: auto !important;
+}
+
+.header-icons {
+  color: $accent3Grey !important;
+}
