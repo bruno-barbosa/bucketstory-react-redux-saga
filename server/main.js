@@ -1,5 +1,6 @@
 // Server dependencies imports
 import helmet from 'helmet'
+import mongoose from 'mongoose'
 import express from 'express'
 
 // Log and optimization imports
@@ -25,7 +26,7 @@ import webpackConfig from '../tools/build/webpack.config'
 
 import indexRoute from './routes/index'
 
-// require('./middlewares/passport')
+require('./middlewares/passport')
 
 const app = express()
 
@@ -35,6 +36,20 @@ debug('Starting express server')
 const paths = config.utils_paths
 
 const MongoStore = mongoStore(session)
+
+// ========================================================
+// Assign es6 promises to Mongoose and connect to MongoDB
+// ========================================================
+mongoose.Promise = global.Promise
+if (process.env.MOCHA) {
+  const MONGOURL = 'mongodb://localhost/bucketstory-tests'
+  mongoose.connect(MONGOURL)
+} else {
+  const MONGOURL = process.env.MONGODB_URI || 'mongodb://localhost/bucketstory'
+  mongoose.connect(MONGOURL, err => {
+    debug(err || `MongoDB connected to ${MONGOURL}`); // eslint-disable-line
+  })
+}
 
 // ========================================================
 // General Purporse middlewares
@@ -52,8 +67,8 @@ app.use(session({
   store: new MongoStore({
     url: process.env.MONGODB_URI,
     autoReconnect: true,
-    autoRemove: 'native',
-  }),
+    autoRemove: 'native'
+  })
 }))
 
 // ========================================================
@@ -89,7 +104,7 @@ if (config.env === 'development') {
     quiet       : config.compiler_quiet,
     noInfo      : config.compiler_quiet,
     lazy        : false,
-    stats       : config.compiler_stats,
+    stats       : config.compiler_stats
   }))
   app.use(webpackHMRMiddleware(compiler))
 

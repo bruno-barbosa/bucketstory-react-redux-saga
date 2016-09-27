@@ -5,10 +5,10 @@ import dotenv from 'dotenv'
 import app from './main'
 import config from '../tools/config'
 
-const debug  = _debug('server:www')
+const debug = _debug('server:www')
 
-const host   = config.server_host
-const port   = config.server_port
+const host = config.server_host
+const port = config.server_port
 const server = http.createServer(app)
 
 dotenv.config()
