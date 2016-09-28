@@ -3,6 +3,8 @@ import { browserHistory } from 'react-router'
 
 import createSagaMiddleware from 'redux-saga'
 
+import { rootSagas } from 'redux/sagas'
+
 import { rootReducers } from 'redux/reducers'
 import { locationActions } from 'redux/actions'
 
@@ -43,9 +45,13 @@ export default (initialState = {}) => {
   // to unsubscribe invoke store.unsubscribeHistory() anywhere
   store.unsubscribeHistory = browserHistory.listen(locationActions.update(store))
 
+  // set saga to store, for async routes
   store.runSaga = (saga) => {
     sagaMiddleware.run(saga)
   }
+
+  // run sync sagas
+  sagaMiddleware.run(rootSagas.syncSagas)
 
   if (module.hot) {
     module.hot.accept('redux/reducers/root', () => {

@@ -1,7 +1,6 @@
 
 import App from 'containers/App'
 import Home from 'routes/Home'
-
 /*
   NOTE: Instead of using JSX, react-router
         PlainRoute objects are used to build route definitions.

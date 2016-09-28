@@ -7,7 +7,8 @@ import RegisterTab from './RegisterTab'
 class Auth extends React.Component {
   static propTypes = {
     authBoolean  : PropTypes.bool.isRequired,
-    handleToggle : PropTypes.func.isRequired
+    handleToggle : PropTypes.func.isRequired,
+    authActions  : PropTypes.object.isRequired
   }
 
   constructor (props, context) {
@@ -17,8 +18,19 @@ class Auth extends React.Component {
       activeTab : 0
     }
 
+    this.handleRegister = this.handleRegister.bind(this)
+
     this.handleTabChange = this.handleTabChange.bind(this)
     this.renderActiveTab = this.renderActiveTab.bind(this)
+  }
+
+  handleRegister (userData) {
+    const data = {
+      name: 'bruno',
+      password: '1123581321',
+      email: 'bruno@barbosa.io'
+    }
+    this.props.authActions.signupRequest(data)
   }
 
   handleTabChange (tabId) {
@@ -28,7 +40,7 @@ class Auth extends React.Component {
   renderActiveTab () {
     switch (this.state.activeTab) {
       case 0: return <LoginTab />
-      case 1: return <RegisterTab />
+      case 1: return <RegisterTab handleRegister={this.handleRegister} />
       default: return null
     }
   }

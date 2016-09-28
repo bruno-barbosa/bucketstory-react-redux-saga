@@ -62,7 +62,7 @@
       }
     },
     "start": {
-      "command":"nodemon --exec ./node_modules/.bin/babel-node server/www --ignore dist --ignore coverage --ignore tests --ignore src",
+      "command": "nodemon --exec ./node_modules/.bin/babel-node server/www --ignore dist --ignore coverage --ignore tests --ignore src",
       "env": {
         "DEBUG": "app:*"
       }
@@ -115,6 +115,7 @@
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-mdl": "^1.7.2",
+    "react-progress-button": "^5.0.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.0",
     "redux": "^3.6.0",
@@ -125,6 +126,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.14",
+    "whatwg-fetch": "^1.0.0",
     "yargs": "^5.0.0"
   },
   "devDependencies": {

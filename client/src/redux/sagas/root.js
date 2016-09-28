@@ -1,7 +1,9 @@
 import { fork } from 'redux-saga/effects'
 
+import authSagas from './auth'
+
 export const make = (asyncSagas) => {
-  return function* rootSaga () {
+  return function * () {
     yield fork(...asyncSagas)
   }
 }
@@ -13,6 +15,10 @@ export const inject = (store, { key, sagas }) => {
 
   store.asyncSagas[key] = sagas
   store.runSaga(make(sagas))
+}
+
+export function * syncSagas () {
+  yield fork(...authSagas)
 }
 
 export default make

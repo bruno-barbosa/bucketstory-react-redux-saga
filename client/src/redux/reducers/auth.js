@@ -17,8 +17,16 @@ export default function authReducer (state = authState, action) {
       return { ...state, sendingRequest: action.signinRequest }
     case authTypes.SIGNIN_SUCCESS:
       return { ...state, authenticated: action.payload.authenticated }
-    case authTypes.SIGNIN_FAIL:
+    case authTypes.SIGNIN_FAILURE:
       return { ...state, error: action.payload.error }
+
+    case authTypes.SIGNUP_REQUEST:
+      return { ...state, user: { ...action.payload } }
+    case authTypes.SIGNUP_SUCCESS:
+      return { ...state, authenticated: action.payload }
+    case authTypes.SIGNUP_FAILURE:
+      return { ...state, error: action.payload.error }
+
     default:
       return state
   }

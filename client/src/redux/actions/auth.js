@@ -1,11 +1,15 @@
 import { authTypes } from 'redux/constants'
 
-export function singinRequest (signinRequest) {
+export function signinRequest (signinRequest) {
   return { type: authTypes.SIGNIN_REQUEST, signinRequest }
 }
 
 export function signinSuccess (payload) {
   return { type: authTypes.SIGNIN_SUCCESS, payload }
+}
+
+export function signinFailure (payload) {
+  return { type: authTypes.SIGNIN_FAILURE, payload }
 }
 
 export function signupRequest (payload) {
@@ -14,6 +18,10 @@ export function signupRequest (payload) {
 
 export function signupSuccess (payload) {
   return { type: authTypes.SIGNUP_SUCCESS, payload }
+}
+
+export function signupFailure (payload) {
+  return { type: authTypes.SIGNUP_FAILURE, payload }
 }
 
 export function logoutRequest (payload) {

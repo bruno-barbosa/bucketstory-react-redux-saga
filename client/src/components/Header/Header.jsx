@@ -9,7 +9,13 @@ import Auth from 'components/Auth'
 import { Header } from 'react-mdl'
 
 class HeaderComponent extends React.Component {
-  static propTypes = {}
+  static propTypes = {
+    authActions : PropTypes.shape({
+      signupRequest : PropTypes.func.isRequired,
+      signinRequest : PropTypes.func.isRequired,
+      logoutRequest : PropTypes.func.isRequired
+    })
+  }
 
   constructor (props, context) {
     super(props, context)
@@ -43,7 +49,10 @@ class HeaderComponent extends React.Component {
             handleToggle={this.handleToggle}
             />
         </Header>
-        <Auth handleToggle={this.handleToggle} authBoolean={this.state.booleans.authBoolean} />
+        <Auth
+          authBoolean={this.state.booleans.authBoolean}
+          handleToggle={this.handleToggle}
+          authActions={this.props.authActions} />
         <Drawer />
       </div>
     )

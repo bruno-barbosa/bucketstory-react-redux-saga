@@ -19,7 +19,7 @@ const AppComponent = ({ children, ...props }) => {
 
   return (
     <Layout>
-      <Header />
+      <Header {...props} />
       {
         (isLoading)
         ? <Spinner />

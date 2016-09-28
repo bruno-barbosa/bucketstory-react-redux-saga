@@ -5,7 +5,7 @@ import { Grid, Cell, Textfield, Button } from 'react-mdl'
 const LoginTab = () => {
   return (
     <Grid>
-      <Cell col={6} align='middle'>
+      <Cell col={6} >
         <Textfield
           floatingLabel
           label='Email'
@@ -25,7 +25,7 @@ const LoginTab = () => {
         </Button>
       </Cell>
       <div className='auth-divider' />
-      <Cell col={6} align='middle auth-tab__container'>
+      <Cell col={6} className='auth-tab__container'>
         <Button className='auth-tab__social auth-tab__social-google'>
           <span className='auth-tab__social-icon'>
             <i className='fa fa-google-plus fa-lg' aria-hidden-true />

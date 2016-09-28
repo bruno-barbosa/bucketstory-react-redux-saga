@@ -11,9 +11,9 @@ import User from '../models/User'
 class Auth {
   static postLogin (req, res, next) {
     // Validate received data
-    req.assert('user.email', 'Email is not valid').isEmail()
-    req.sanitize('user.email').normalizeEmail({ remove_dots: false })
-    req.assert('user.password', 'Password cannot be empty').notEmpty()
+    req.assert('email', 'Email is not valid').isEmail()
+    req.sanitize('email').normalizeEmail({ remove_dots: false })
+    req.assert('password', 'Password cannot be empty').notEmpty()
 
     const errors = req.validationErrors()
 
@@ -38,24 +38,24 @@ class Auth {
 
   static postRegister (req, res, next) {
     // Validate received data
-    req.assert('body.user.email', 'Email is not valid').isEmail()
-    req.sanitize('body.user.email').normalizeEmail({ remove_dots: false })
-    req.assert('body.user.password', 'Password must be at least 8 characters long').len(8)
+    req.assert('email', 'Email is not valid').isEmail()
+    req.sanitize('email').normalizeEmail({ remove_dots: false })
+    req.assert('password', 'Password must be at least 8 characters long').len(8)
 
     const errors = req.validationErrors()
 
     if (errors) return res.send(errors)
 
-    User.findOne({ 'profile.email': req.body.user.email }, (err, existingUser) => {
+    User.findOne({ 'profile.email': req.body.email }, (err, existingUser) => {
       if (err) return next(err)
       if (existingUser) res.send('This email has already been registered.')
 
       const accessToken = uuid()
       const user = new User()
 
-      user.profile.name = req.body.user.name
-      user.profile.email = req.body.user.email
-      user.profile.password = req.body.user.password
+      user.profile.name = req.body.name
+      user.profile.email = req.body.email
+      user.profile.password = req.body.password
       user.tokens.socialToken.push({ kind: 'local', accessToken })
 
       user.save((errSave, savedUser) => {

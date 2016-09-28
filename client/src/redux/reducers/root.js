@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 import locationReducer from './location'
+import authReducer from './auth'
 
 export const make = (asyncReducers) => {
   return combineReducers({
-    location: locationReducer,
+    location   : locationReducer,
+    account    : authReducer,
     ...asyncReducers
   })
 }
