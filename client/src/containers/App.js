@@ -18,10 +18,20 @@ class AppContainer extends React.Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapStateToProps (state) {
   return {
-    authActions: bindActionCreators(authActions, dispatch)
+    state: {
+      account   : state.account
+    }
   }
 }
 
-export default connect(null, mapDispatchToProps)(AppContainer)
+function mapDispatchToProps (dispatch) {
+  return {
+    actions : {
+      auth  : bindActionCreators(authActions, dispatch)
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer)

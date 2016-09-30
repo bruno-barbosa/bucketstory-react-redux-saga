@@ -1,12 +1,13 @@
 import { authTypes } from 'redux/constants'
 
 const authState = {
-  user : {
-    name    : '',
-    email   : '',
-    password: ''
+  profile : {
+    name      : '',
+    email     : '',
+    password  : '',
+    role      : ''
   },
-  authenticated   : false, // add a function that returns a boolean instead
+  authenticated   : false,
   sendingRequest  : false,
   error           : ''
 }
@@ -14,18 +15,18 @@ const authState = {
 export default function authReducer (state = authState, action) {
   switch (action.type) {
     case authTypes.SIGNIN_REQUEST:
-      return { ...state, sendingRequest: action.signinRequest }
+      return { ...state, sendingRequest: action.payload }
     case authTypes.SIGNIN_SUCCESS:
       return { ...state, authenticated: action.payload.authenticated }
     case authTypes.SIGNIN_FAILURE:
       return { ...state, error: action.payload.error }
 
     case authTypes.SIGNUP_REQUEST:
-      return { ...state, user: { ...action.payload } }
+      return { ...state, profile: { ...action.payload, password: '' }, sendingRequest: true }
     case authTypes.SIGNUP_SUCCESS:
-      return { ...state, authenticated: action.payload }
+      return { ...state, profile: { ...action.payload.profile }, authenticated: true, sendingRequest: false }
     case authTypes.SIGNUP_FAILURE:
-      return { ...state, error: action.payload.error }
+      return { ...state, error: action.payload.statusText, authenticated: false, sendingRequest: false }
 
     default:
       return state

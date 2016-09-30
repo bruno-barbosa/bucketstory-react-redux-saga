@@ -25,7 +25,7 @@ class Auth {
       req.login(user, (errLogin) => {
         if (errLogin) return res.send(errLogin)
 
-        req.user.password = null
+        req.user.profile.password = null
         res.send(req.user)
       })
     })(req, res, next)
@@ -48,8 +48,7 @@ class Auth {
 
     User.findOne({ 'profile.email': req.body.email }, (err, existingUser) => {
       if (err) return next(err)
-      if (existingUser) res.send('This email has already been registered.')
-
+      if (existingUser) return res.end(res.writeHead(400, 'This email has already been registered'))
       const accessToken = uuid()
       const user = new User()
 
@@ -58,10 +57,15 @@ class Auth {
       user.profile.password = req.body.password
       user.tokens.socialToken.push({ kind: 'local', accessToken })
 
-      user.save((errSave, savedUser) => {
-        if (errSave) return next(errSave)
-        savedUser.password = null
-        res.send(savedUser)
+      user.save(errSave => {
+        if (errSave) next(errSave)
+
+        req.login(user, errLogin => {
+          if (errLogin) return next(errLogin)
+
+          req.user.profile.password = null
+          res.send(req.user)
+        })
       })
     })
   }
@@ -71,7 +75,7 @@ class Auth {
 // Account
 // ======================================================
 class Account {
-  static getAccount (req, res, next) {
+  static getInfo (req, res, next) {
     if (!req.user) return res.status(304).end()
 
     User.findById(req.user.id, (err, dbUser) => {

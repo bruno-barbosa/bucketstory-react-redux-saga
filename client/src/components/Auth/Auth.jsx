@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react'
 
 import AuthDialog from './AuthDialog'
-import LoginTab from './LoginTab'
-import RegisterTab from './RegisterTab'
+import AuthTab from './AuthTab'
+
+const LoginTab = AuthTab
+const RegisterTab = AuthTab
 
 class Auth extends React.Component {
   static propTypes = {
@@ -18,19 +20,16 @@ class Auth extends React.Component {
       activeTab : 0
     }
 
-    this.handleRegister = this.handleRegister.bind(this)
+    this.handleAuth = this.handleAuth.bind(this)
 
     this.handleTabChange = this.handleTabChange.bind(this)
     this.renderActiveTab = this.renderActiveTab.bind(this)
   }
 
-  handleRegister (userData) {
-    const data = {
-      name: 'bruno',
-      password: '1123581321',
-      email: 'bruno@barbosa.io'
-    }
-    this.props.authActions.signupRequest(data)
+  handleAuth (authData) {
+    (authData.type === 'login')
+    ? this.props.authActions.loginRequest(authData)
+    : this.props.authActions.registerRequest(authData)
   }
 
   handleTabChange (tabId) {
@@ -39,8 +38,8 @@ class Auth extends React.Component {
 
   renderActiveTab () {
     switch (this.state.activeTab) {
-      case 0: return <LoginTab />
-      case 1: return <RegisterTab handleRegister={this.handleRegister} />
+      case 0: return <LoginTab authText='Sign in' authType='login' handleAuth={this.handleAuth} />
+      case 1: return <RegisterTab authText='Sign up' authType='register' handleAuth={this.handleAuth} />
       default: return null
     }
   }

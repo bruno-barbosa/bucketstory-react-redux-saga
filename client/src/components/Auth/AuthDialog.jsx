@@ -20,7 +20,7 @@ const AuthDialog = (props) => {
             activeTab={props.activeTab}
             onChange={props.handleTabChange}
             >
-            <Tab>Login</Tab>
+            <Tab>Sign In</Tab>
             <Tab>Register</Tab>
           </Tabs>
         </MDLComponent>

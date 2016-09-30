@@ -2,15 +2,25 @@ import React, { PropTypes } from 'react'
 
 import { Grid, Cell, Textfield, Button } from 'react-mdl'
 
-const RegisterTab = (props) => {
+const AuthTab = (props) => {
   function handleAuth (event) {
     event.preventDefault()
-    let authData = {
-      type      : 'register',
+
+    let authData
+
+    props.authType === 'login'
+    ? authData = {
+      type      : props.authType,
+      email     : document.getElementsByTagName('INPUT')[1].value,
+      password  : document.getElementsByTagName('INPUT')[2].value
+    }
+    : authData = {
+      type      : props.authType,
       name      : document.getElementsByTagName('INPUT')[1].value,
       email     : document.getElementsByTagName('INPUT')[2].value,
       password  : document.getElementsByTagName('INPUT')[3].value
     }
+
     props.handleAuth(authData)
   }
 
@@ -18,34 +28,27 @@ const RegisterTab = (props) => {
     <Grid>
       <Cell col={6} >
         <form onSubmit={handleAuth} >
-          <Textfield
+
+          {(props.authType === 'login')
+          ? null
+          : <Textfield
             floatingLabel
             label='Name'
-            // value={props.profile.name}
             style={{ width: '200px' }}
-            />
+            />}
           <Textfield
             floatingLabel
             label='Email'
-            // value={props.profile.email}
             style={{ width: '200px' }}
             />
           <Textfield
             floatingLabel
             type='password'
             label='Password'
-            // value={props.profile.password}
             style={{ width: '200px' }}
             />
-          {/* <Textfield
-            floatingLabel
-            type='password'
-            label='Confirm password'
-            onChange={() => {}}
-            style={{ width: '200px' }}
-            /> */}
           <Button type='submit' className='auth-tab__button-success'>
-              Submit
+            {props.authText}
           </Button>
         </form>
       </Cell>
@@ -64,7 +67,7 @@ const RegisterTab = (props) => {
             <i className='fa fa-facebook fa-lg' aria-hidden-true />
           </span>
           <span className='auth-tab__social-text'>
-            Sign up with Facebook
+            {props.authText} with Facebook
           </span>
         </Button>
         <Button className='auth-tab__social auth-tab__social-twitter'>
@@ -72,7 +75,7 @@ const RegisterTab = (props) => {
             <i className='fa fa-twitter fa-lg' aria-hidden-true />
           </span>
           <span className='auth-tab__social-text'>
-            Sign up with Twitter
+            {props.authText} with Twitter
           </span>
         </Button>
       </Cell>
@@ -80,8 +83,10 @@ const RegisterTab = (props) => {
   )
 }
 
-RegisterTab.propTypes = {
-  handleAuth  : PropTypes.func.isRequired
+AuthTab.propTypes = {
+  handleAuth  : PropTypes.func.isRequired,
+  authText    : PropTypes.string.isRequired,
+  authType    : PropTypes.string.isRequired
 }
 
-export default RegisterTab
+export default AuthTab

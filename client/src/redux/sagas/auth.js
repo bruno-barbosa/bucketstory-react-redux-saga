@@ -1,23 +1,57 @@
-import { take, call, put } from 'redux-saga/effects'
+import { call, fork, put, take } from 'redux-saga/effects'
 
 import authApi from 'utils/authApi'
 import { authTypes } from 'redux/constants'
 
-export function * registerSaga () {
+// ======================================================
+// Sagas
+// ======================================================
+function * registerFlow (request) {
+  try {
+    const payload = yield call(authApi.register, request)
+    console.log('response', payload)
+    payload.statusText
+    ? yield put({ type: authTypes.LOGIN_FAILURE, payload })
+    : yield put({ type: authTypes.REGISTER_SUCCESS, payload })
+  } catch (error) {
+    yield put({ type: authTypes.REGISTER_FAILURE, error })
+  }
+}
+
+function * loginFlow (request) {
+  try {
+    const payload = yield call(authApi.login, request)
+
+    payload.statusText
+    ? yield put({ type: authTypes.LOGIN_FAILURE, payload })
+    : yield put({ type: authTypes.REGISTER_SUCCESS, payload })
+  } catch (error) {
+    yield put({ type: authTypes.LOGIN_FAILURE, error })
+  }
+}
+
+// ======================================================
+// Watchers
+// ======================================================
+function * watchRegister () {
   while (true) {
-    const request = yield take(authTypes.SIGNUP_REQUEST)
-    let response = yield call(authApi.register, request.payload)
+    const { payload } = yield take(authTypes.REGISTER_REQUEST)
+    console.log('request', payload)
+    yield fork(registerFlow, payload)
+  }
+}
 
-    if (response.statusText || response.error) {
-      yield put({ type: authTypes.SIGNUP_FAILURE, response })
-    }
+function * watchLogin () {
+  while (true) {
+    const { payload } = yield take(authTypes.LOGIN_REQUEST)
 
-    yield put({ type: authTypes.SIGNUP_SUCCESS, response })
+    yield fork(loginFlow, payload)
   }
 }
 
 const authSagas = [
-  registerSaga
+  watchRegister,
+  watchLogin
 ]
 
 export default authSagas
