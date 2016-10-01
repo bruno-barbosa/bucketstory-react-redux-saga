@@ -10,10 +10,10 @@ import { Header } from 'react-mdl'
 
 class HeaderComponent extends React.Component {
   static propTypes = {
-    actions : PropTypes.shape({
+    reduxActions : PropTypes.shape({
       auth : PropTypes.object.isRequired
     }),
-    state : PropTypes.shape({
+    reduxState : PropTypes.shape({
       account   : PropTypes.object.isRequired
     })
   }
@@ -53,7 +53,8 @@ class HeaderComponent extends React.Component {
         <Auth
           authBoolean={this.state.booleans.authBoolean}
           handleToggle={this.handleToggle}
-          authActions={this.props.actions.auth}
+          authActions={this.props.reduxActions.auth}
+          account={this.props.reduxState.account}
         />
         <Drawer />
       </div>

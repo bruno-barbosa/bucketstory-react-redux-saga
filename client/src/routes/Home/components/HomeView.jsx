@@ -1,9 +1,15 @@
 import React from 'react'
 
+import Spinner from 'halogen/PulseLoader'
+
 export const HomeView = (props) => {
   require('./home.scss')
   return (
-    <h1>Home</h1>
+    <Spinner
+      color='#3f51b5'
+      size='16px'
+      margin='4px'
+    />
   )
 }
 

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 const Spinner = (props) => {
   require('./spinner.scss')
-  const Loader = require(`halogen/${props.type}`)
+  const Loader = require(`halogen/${props.type}Loader`)
 
   return (
     <div className='spinner-container'>
@@ -12,7 +12,7 @@ const Spinner = (props) => {
 }
 
 Spinner.defaultProps = {
-  type    : 'DotLoader',
+  type    : 'Dot',
   color   : '#3f51b5',
   size    : '60px',
   margin  : '5px'

@@ -41,12 +41,24 @@
   background-color: #d34836;
 }
 
+.auth-tab__social-google:hover {
+  background-color: #ED6250
+}
+
 .auth-tab__social-facebook {
   background-color: #3b5998;
 }
 
+.auth-tab__social-facebook:hover {
+  background-color: #5573B2;
+}
+
 .auth-tab__social-twitter {
   background-color: #00aced;
+}
+
+.auth-tab__social-twitter:hover {
+  background-color: #1AC6FF;
 }
 
 
@@ -62,6 +74,12 @@
 
 .auth-tab__button-success:hover {
   background-color: #66bb6a;
+}
+
+.auth-tab__button-loading {
+  margin-top: 9px;
+  display: flex;
+  justify-content: center;
 }
 
 .auth-tab__button-error {

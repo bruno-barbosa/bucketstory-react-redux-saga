@@ -18,7 +18,9 @@ export const inject = (store, { key, sagas }) => {
 }
 
 export function * syncSagas () {
-  yield fork(...authSagas)
+  yield [
+    ...authSagas
+  ]
 }
 
 export default make

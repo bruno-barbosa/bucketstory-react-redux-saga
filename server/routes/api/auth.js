@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post('/local/register', Auth.postRegister)
 router.post('/local/login', Auth.postLogin)
-router.post('/local/logout', Auth.postLogout)
+router.delete('/local/logout', Auth.postLogout)
 
 // Google authentication
 router.get('/social/google', passport.authenticate('google'))

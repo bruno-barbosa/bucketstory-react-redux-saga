@@ -1,54 +1,47 @@
 import React, { PropTypes } from 'react'
 
+import { Field, reduxForm } from 'redux-form'
+import syncValidate from './syncValidate'
+
 import { Grid, Cell, Textfield, Button } from 'react-mdl'
+import Spinner from 'halogen/PulseLoader'
+
+const renderTextField = ({ input, label, type, meta: { touched, error }, ...custom }) => {
+  return (
+    <Textfield
+      floatingLabel
+      label={label}
+      type={type}
+      error={touched && error}
+      style={{ width: '200px' }}
+      {...input}
+      {...custom}
+      />
+  )
+}
 
 const AuthTab = (props) => {
-  function handleAuth (event) {
-    event.preventDefault()
-
-    let authData
-
-    props.authType === 'login'
-    ? authData = {
-      type      : props.authType,
-      email     : document.getElementsByTagName('INPUT')[1].value,
-      password  : document.getElementsByTagName('INPUT')[2].value
-    }
-    : authData = {
-      type      : props.authType,
-      name      : document.getElementsByTagName('INPUT')[1].value,
-      email     : document.getElementsByTagName('INPUT')[2].value,
-      password  : document.getElementsByTagName('INPUT')[3].value
-    }
-
-    props.handleAuth(authData)
-  }
-
+  console.log(props)
   return (
     <Grid>
       <Cell col={6} >
-        <form onSubmit={handleAuth} >
+        <form onSubmit={props.handleSubmit(data => props.handleAuth(data))} >
 
           {(props.authType === 'login')
           ? null
-          : <Textfield
-            floatingLabel
-            label='Name'
-            style={{ width: '200px' }}
-            />}
-          <Textfield
-            floatingLabel
-            label='Email'
-            style={{ width: '200px' }}
-            />
-          <Textfield
-            floatingLabel
-            type='password'
-            label='Password'
-            style={{ width: '200px' }}
-            />
+          : <Field name='name' component={renderTextField} label='Name' type='text' />}
+          <Field name='email' component={renderTextField} label='Email' type='email' />
+          <Field name='password' component={renderTextField} label='Password' type='password' />
           <Button type='submit' className='auth-tab__button-success'>
-            {props.authText}
+            {(props.user.sendingRequest)
+            ? <div className='auth-tab__button-loading'>
+              <Spinner
+                color='#ffffff'
+                size='12px'
+                margin='4px'
+              />
+            </div>
+            : props.authText }
           </Button>
         </form>
       </Cell>
@@ -84,9 +77,21 @@ const AuthTab = (props) => {
 }
 
 AuthTab.propTypes = {
-  handleAuth  : PropTypes.func.isRequired,
-  authText    : PropTypes.string.isRequired,
-  authType    : PropTypes.string.isRequired
+  handleAuth      : PropTypes.func.isRequired,
+  handleSubmit    : PropTypes.func.isRequired,
+  user            : PropTypes.object.isRequired,
+  authText        : PropTypes.string.isRequired,
+  authType        : PropTypes.string.isRequired
 }
 
-export default AuthTab
+renderTextField.propTypes = {
+  input          : PropTypes.object.isRequired,
+  meta           : PropTypes.object.isRequired,
+  label          : PropTypes.string.isRequired,
+  type           : PropTypes.string.isRequired
+}
+
+export default reduxForm({
+  form      : 'AuthForm',
+  validate  : syncValidate
+})(AuthTab)

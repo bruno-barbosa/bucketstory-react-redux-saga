@@ -20,7 +20,7 @@ class AppContainer extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    state: {
+    reduxState: {
       account   : state.account
     }
   }
@@ -28,7 +28,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions : {
+    reduxActions : {
       auth  : bindActionCreators(authActions, dispatch)
     }
   }

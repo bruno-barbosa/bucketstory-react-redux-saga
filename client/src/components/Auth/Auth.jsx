@@ -8,9 +8,10 @@ const RegisterTab = AuthTab
 
 class Auth extends React.Component {
   static propTypes = {
-    authBoolean  : PropTypes.bool.isRequired,
-    handleToggle : PropTypes.func.isRequired,
-    authActions  : PropTypes.object.isRequired
+    authBoolean     : PropTypes.bool.isRequired,
+    handleToggle    : PropTypes.func.isRequired,
+    authActions     : PropTypes.object.isRequired,
+    account         : PropTypes.object.isRequired
   }
 
   constructor (props, context) {
@@ -38,8 +39,22 @@ class Auth extends React.Component {
 
   renderActiveTab () {
     switch (this.state.activeTab) {
-      case 0: return <LoginTab authText='Sign in' authType='login' handleAuth={this.handleAuth} />
-      case 1: return <RegisterTab authText='Sign up' authType='register' handleAuth={this.handleAuth} />
+      case 0: return (
+        <LoginTab
+          authText='Sign in'
+          authType='login'
+          user={this.props.account}
+          handleAuth={this.handleAuth}
+        />
+      )
+      case 1: return (
+        <RegisterTab
+          authText='Sign up'
+          authType='register'
+          user={this.props.account}
+          handleAuth={this.handleAuth}
+        />
+      )
       default: return null
     }
   }
