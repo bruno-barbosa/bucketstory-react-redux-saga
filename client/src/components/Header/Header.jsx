@@ -1,65 +1,36 @@
 import React, { PropTypes } from 'react'
 import { IndexLink } from 'react-router'
 
-import Drawer from './Drawer'
 import Navigation from './Navigation'
-
-import Auth from 'components/Auth'
 
 import { Header } from 'react-mdl'
 
-class HeaderComponent extends React.Component {
-  static propTypes = {
-    reduxActions : PropTypes.shape({
-      auth : PropTypes.object.isRequired
-    }),
-    reduxState : PropTypes.shape({
-      account   : PropTypes.object.isRequired
-    })
-  }
-
-  constructor (props, context) {
-    super(props, context)
-
-    this.state = {
-      booleans: {
-        authBoolean: false
-      }
-    }
-
-    this.handleToggle = this.handleToggle.bind(this)
-  }
-
-  handleToggle (toggle) {
-    this.setState({ booleans: { authBoolean: !this.state.booleans.authBoolean } })
-    if (toggle === this.state.booleans.authBoolean) {
-    }
-  }
-
-  render () {
-    require('./header.scss')
-
-    return (
-      <div>
-        <Header scroll className='header-navigation' title={
-          <IndexLink to='/'>
-            <img src='./images/logo.svg' alt='bucketstory' />
-          </IndexLink>
-        }>
-          <Navigation
-            handleToggle={this.handleToggle}
-            />
-        </Header>
-        <Auth
-          authBoolean={this.state.booleans.authBoolean}
-          handleToggle={this.handleToggle}
-          authActions={this.props.reduxActions.auth}
-          account={this.props.reduxState.account}
+const HeaderComponent = (props) => {
+  return (
+    <Header scroll className='header-navigation' title={
+      <IndexLink to='/'>
+        <img className='header-logo' src='./images/logo.svg' alt='bucketstory' />
+      </IndexLink>
+      }>
+      <Navigation
+        handleToggle={props.reduxActions.coreui.authToggle}
+        userAccount={props.reduxState.account}
+        routes={props.reduxRoutes}
         />
-        <Drawer />
-      </div>
-    )
-  }
+    </Header>
+  )
+}
+
+HeaderComponent.propTypes = {
+  reduxActions : PropTypes.shape({
+    coreui  : PropTypes.object.isRequired,
+    auth    : PropTypes.object.isRequired
+  }),
+  reduxState  : PropTypes.shape({
+    coreui    : PropTypes.object.isRequired,
+    account   : PropTypes.object.isRequired
+  }),
+  reduxRoutes : PropTypes.array.isRequired
 }
 
 export default HeaderComponent

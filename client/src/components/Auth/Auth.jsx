@@ -8,10 +8,10 @@ const RegisterTab = AuthTab
 
 class Auth extends React.Component {
   static propTypes = {
-    authBoolean     : PropTypes.bool.isRequired,
+    authDialog      : PropTypes.bool.isRequired,
     handleToggle    : PropTypes.func.isRequired,
     authActions     : PropTypes.object.isRequired,
-    account         : PropTypes.object.isRequired
+    userAccount     : PropTypes.object.isRequired
   }
 
   constructor (props, context) {
@@ -22,15 +22,20 @@ class Auth extends React.Component {
     }
 
     this.handleAuth = this.handleAuth.bind(this)
+    this.handleSocialAuth = this.handleSocialAuth.bind(this)
 
     this.handleTabChange = this.handleTabChange.bind(this)
     this.renderActiveTab = this.renderActiveTab.bind(this)
   }
 
   handleAuth (authData) {
-    (authData.type === 'login')
+    (!authData.name)
     ? this.props.authActions.loginRequest(authData)
     : this.props.authActions.registerRequest(authData)
+  }
+
+  handleSocialAuth (provider) {
+    this.props.authActions.socialAuth(provider)
   }
 
   handleTabChange (tabId) {
@@ -43,7 +48,7 @@ class Auth extends React.Component {
         <LoginTab
           authText='Sign in'
           authType='login'
-          user={this.props.account}
+          userAccount={this.props.userAccount}
           handleAuth={this.handleAuth}
         />
       )
@@ -51,7 +56,7 @@ class Auth extends React.Component {
         <RegisterTab
           authText='Sign up'
           authType='register'
-          user={this.props.account}
+          userAccount={this.props.userAccount}
           handleAuth={this.handleAuth}
         />
       )
@@ -62,7 +67,7 @@ class Auth extends React.Component {
   render () {
     return (
       <AuthDialog
-        authBoolean={this.props.authBoolean}
+        authDialog={this.props.authDialog}
         handleToggle={this.props.handleToggle}
         handleTabChange={this.handleTabChange}
         renderActiveTab={this.renderActiveTab}

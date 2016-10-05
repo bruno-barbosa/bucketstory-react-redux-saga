@@ -1,4 +1,25 @@
+/**
+ * Only one constant for REQUEST and FAILURE
+ * could be used to handle all requests and failures
+ * however for clarity's sake I've decided to use one each
+ * disregarding the code repetition.
+ *
+ * This may be changed in the future.
+ */
+
 import { authTypes } from 'redux/constants'
+
+export function getUserRequest (payload) {
+  return { type: authTypes.GETUSER_REQUEST, payload }
+}
+
+export function getUserSuccess (payload) {
+  return { type: authTypes.GETUSER_SUCCESS, payload }
+}
+
+export function getUserFailure (payload) {
+  return { type: authTypes.GETUSER_FAILURE, payload}
+}
 
 export function loginRequest (payload) {
   return { type: authTypes.LOGIN_REQUEST, payload }

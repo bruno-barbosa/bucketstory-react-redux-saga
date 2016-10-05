@@ -45,9 +45,10 @@ userSchema.methods.comparePassword = function (candidatePassword, cb) {
   })
 }
 
-userSchema.methods.gravatar = function (size = 200) {
-  if (!this.email) return `https://gravatar.com/avatar/?s=${size}&d=retro`
-  return `https://gravatar.com/${md5(this.email)}?s=${size}&d=retro`
+userSchema.methods.gravatar = function (email, size = 200) {
+  email.trim().toLowerCase()
+  if (!email) return `//gravatar.com/avatar/?s=${size}&d=retro`
+  return `//gravatar.com/avatar/${md5(email)}?s=${size}&d=retro`
 }
 
 export default mongoose.model('User', userSchema)

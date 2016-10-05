@@ -21,7 +21,6 @@ const renderTextField = ({ input, label, type, meta: { touched, error }, ...cust
 }
 
 const AuthTab = (props) => {
-  console.log(props)
   return (
     <Grid>
       <Cell col={6} >
@@ -30,10 +29,10 @@ const AuthTab = (props) => {
           {(props.authType === 'login')
           ? null
           : <Field name='name' component={renderTextField} label='Name' type='text' />}
-          <Field name='email' component={renderTextField} label='Email' type='email' />
+          <Field name='email' component={renderTextField} label='Email' type='text' />
           <Field name='password' component={renderTextField} label='Password' type='password' />
           <Button type='submit' className='auth-tab__button-success'>
-            {(props.user.sendingRequest)
+            {(props.userAccount.sendingRequest)
             ? <div className='auth-tab__button-loading'>
               <Spinner
                 color='#ffffff'
@@ -79,7 +78,7 @@ const AuthTab = (props) => {
 AuthTab.propTypes = {
   handleAuth      : PropTypes.func.isRequired,
   handleSubmit    : PropTypes.func.isRequired,
-  user            : PropTypes.object.isRequired,
+  userAccount     : PropTypes.object.isRequired,
   authText        : PropTypes.string.isRequired,
   authType        : PropTypes.string.isRequired
 }

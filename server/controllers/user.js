@@ -25,7 +25,7 @@ class Auth {
       req.login(user, (errLogin) => {
         if (errLogin) return res.send(errLogin)
 
-        req.user.profile.password = null
+        req.user.profile.password = ''
         res.send(req.user)
       })
     })(req, res, next)
@@ -48,10 +48,11 @@ class Auth {
 
     User.findOne({ 'profile.email': req.body.email }, (err, existingUser) => {
       if (err) return next(err)
-      if (existingUser) return res.end(res.writeHead(400, 'This email has already been registered'))
+      if (existingUser) return res.send({ error:  'This email has already been registered' })
       const accessToken = uuid()
       const user = new User()
 
+      user.profile.picture = user.gravatar(req.body.email)
       user.profile.name = req.body.name
       user.profile.email = req.body.email
       user.profile.password = req.body.password
@@ -63,7 +64,7 @@ class Auth {
         req.login(user, errLogin => {
           if (errLogin) return next(errLogin)
 
-          req.user.profile.password = null
+          req.user.profile.password = ''
           res.send(req.user)
         })
       })
@@ -76,9 +77,10 @@ class Auth {
 // ======================================================
 class Account {
   static getInfo (req, res, next) {
-    if (!req.user) return res.status(304).end()
+    console.log(req.user)
+    if (!req.user) return res.send({ error:  'Please login.' })
 
-    User.findById(req.user.id, (err, dbUser) => {
+    User.findById(req.user.id, { 'profile.password': 0, _id: 0 }, (err, dbUser) => {
       if (err) return next(err)
       res.send(dbUser)
     }) // Populate collections if necessary

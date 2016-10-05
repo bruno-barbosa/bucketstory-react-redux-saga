@@ -21,16 +21,11 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   User.findById(id, (err, user) => {
+    user.profile.password = undefined
     done(err, user)
   })
 })
 
-// ======================================================
-// LOGIN MIDDLEWARE
-// ======================================================
-export const isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) return next()
-}
 
 // ======================================================
 // Local Strategy
@@ -38,11 +33,11 @@ export const isAuthenticated = (req, res, next) => {
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
   User.findOne({ 'profile.email': email.toLowerCase() }, (err, user) => {
     if (err) return done(err)
-    if (!user) return done(null, false, { msg: `Email ${email} not found.` })
+    if (!user) return done(null, false, { error: 'Invalid email or password' })
 
     user.comparePassword(password, (errCompare, isMatch) => {
       if (isMatch) return done(null, user)
-      return done(null, false, { msg: 'Invalid email or password.' })
+      return done(null, false, { error: 'Invalid email or password.' })
     })
   })
 }))
@@ -72,7 +67,7 @@ passport.use(new GoogleStrategy({
   if (req.user) {
     User.findOne({ 'social.google': profile.id }, (err, existingUser) => {
       if (err) return done(err)
-      if (existingUser) return done('This google account has already been registered.')
+      if (existingUser) return done({ error: 'This google account has already been registered.' })
 
       User.findById(req.user.id, (errLink, user) => {
         if (errLink) return done(errLink)
@@ -96,7 +91,7 @@ passport.use(new GoogleStrategy({
 
       User.findOne({ 'profile.email': profile.emails[0].value }, (errLink, existingEmail) => {
         if (errLink) return done(errLink)
-        if (existingEmail) return done('This google account has already been registered.')
+        if (existingEmail) return done({ error: 'This google account has already been registered.' })
 
         const user = new User()
 
@@ -127,7 +122,7 @@ passport.use(new FacebookStrategy({
   if (req.user) {
     User.findOne({ 'social.facebook': profile.id }, (err, existingUser) => {
       if (err) return done(err)
-      if (existingUser) return done('This facebook account has already been registered.')
+      if (existingUser) return done({ error: 'This facebook account has already been registered.' })
 
       User.findById(req.user.id, (errLink, user) => {
         if (errLink) return done(errLink)
@@ -151,7 +146,7 @@ passport.use(new FacebookStrategy({
 
       User.findOne({ 'profile.email': profile._json.email }, (errLink, existingEmail) => {
         if (errLink) return done(errLink)
-        if (existingEmail) return done('This facebook account has already been registered.')
+        if (existingEmail) return done({ error: 'This facebook account has already been registered.' })
 
         const user = new User()
 
@@ -180,7 +175,7 @@ passport.use(new TwitterStrategy({
   if (req.user) {
     User.findOne({ 'social.twitter': profile.id }, (err, existingUser) => {
       if (err) return done(err)
-      if (existingUser) return done('This twitter account has already been registered.')
+      if (existingUser) return done({ error: 'This twitter account has already been registered.' })
 
       User.findById(req.user.id, (errLink, user) => {
         if (errLink) return done(errLink)
@@ -215,3 +210,10 @@ passport.use(new TwitterStrategy({
     })
   }
 }))
+
+// ======================================================
+// Login Middleware
+// ======================================================
+export const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) return next()
+}

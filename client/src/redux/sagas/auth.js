@@ -1,15 +1,27 @@
 import { call, fork, put, take } from 'redux-saga/effects'
 
-import { authApi } from 'utils'
+import { authApi } from 'utils/api'
 import { authTypes } from 'redux/constants'
 
 // ======================================================
 // Sagas
 // ======================================================
+function * getUserFlow (request) {
+  try {
+    const payload = yield call(authApi.getUser, request)
+
+    payload.error
+    ? yield put({ type: authTypes.GETUSER_FAILURE, payload })
+    : yield put({ type: authTypes.GETUSER_SUCCESS, payload })
+  } catch (error) {
+    yield put({ type: authTypes.GETUSER_FAILURE, error })
+  }
+}
 function * loginFlow (request) {
   try {
     const payload = yield call(authApi.login, request)
-    payload.statusText
+
+    payload.error
     ? yield put({ type: authTypes.LOGIN_FAILURE, payload })
     : yield put({ type: authTypes.LOGIN_SUCCESS, payload })
   } catch (error) {
@@ -20,8 +32,8 @@ function * loginFlow (request) {
 function * registerFlow (request) {
   try {
     const payload = yield call(authApi.register, request)
-    console.log('response', payload)
-    payload.statusText
+
+    payload.error
     ? yield put({ type: authTypes.REGISTER_FAILURE, payload })
     : yield put({ type: authTypes.REGISTER_SUCCESS, payload })
   } catch (error) {
@@ -41,6 +53,12 @@ function * logoutFlow (request) {
 // ======================================================
 // Watchers
 // ======================================================
+function * watchGetUser () {
+  while (true) {
+    const { payload } = yield take(authTypes.GETUSER_REQUEST)
+    yield fork(getUserFlow, payload)
+  }
+}
 function * watchLogin () {
   while (true) {
     const { payload } = yield take(authTypes.LOGIN_REQUEST)
@@ -64,6 +82,7 @@ function * watchLogout () {
 }
 
 const authSagas = [
+  fork(watchGetUser),
   fork(watchLogin),
   fork(watchRegister),
   fork(watchLogout)

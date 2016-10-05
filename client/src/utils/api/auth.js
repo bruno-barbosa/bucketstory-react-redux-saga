@@ -1,17 +1,35 @@
-import { API_URL } from 'utils'
+import { API_URL } from 'utils/api'
 
 // Inject fetch polyfill if fetch is unsuported
 if (!window.fetch) { window.fetch = require('whatwg-fetch') }
 
 const authApi = {
-  login (userData) {
-    return fetch(`${API_URL}/auth/local/login`, {
-      method  : 'POST',
-      headers : {
+  getUser () {
+    return fetch(`${API_URL}/user/profile`, {
+      method      : 'GET',
+      headers     : {
         'Accept'        : 'application/json',
         'Content-Type'  : 'application/json'
       },
-      body    : JSON.stringify({
+      credentials : 'same-origin',
+      cache       : 'default'
+    })
+    .then(statusHelper)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => error)
+  },
+
+  login (userData) {
+    return fetch(`${API_URL}/auth/local/login`, {
+      method      : 'POST',
+      headers     : {
+        'Accept'        : 'application/json',
+        'Content-Type'  : 'application/json'
+      },
+      credentials : 'same-origin',
+      cache       : 'default',
+      body        : JSON.stringify({
         email     : userData.email,
         password  : userData.password
       })
@@ -24,12 +42,14 @@ const authApi = {
 
   register (userData) {
     return fetch(`${API_URL}/auth/local/register`, {
-      method  : 'POST',
-      headers : {
+      method      : 'POST',
+      headers     : {
         'Accept'        : 'application/json',
         'Content-Type'  : 'application/json'
       },
-      body    : JSON.stringify({
+      credentials : 'same-origin',
+      cache       : 'default',
+      body        : JSON.stringify({
         name      : userData.name,
         email     : userData.email,
         password  : userData.password
@@ -62,6 +82,10 @@ function statusHelper (response) {
   } else {
     return Promise.reject(response)
   }
+}
+
+function localStorage () {
+
 }
 
 export default authApi

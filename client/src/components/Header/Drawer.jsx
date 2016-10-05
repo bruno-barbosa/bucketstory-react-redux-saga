@@ -10,7 +10,7 @@ const DrawerComponent = () => {
   return (
     <Drawer title={
       <IndexLink to='/'>
-        <img src='./images/logo.svg' alt='bucketstory' />
+        <img className='header-drawer__logo' src='./images/logo.svg' alt='bucketstory' />
       </IndexLink>
     }>
       <Navigation>

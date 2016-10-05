@@ -8,7 +8,7 @@ const publicMenu = [
 
 const authMenu = [
   {
-    key   : 'profile',
+    key   : 'story',
     name  : 'Profile',
     link  : '/profile'
   }

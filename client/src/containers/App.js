@@ -2,13 +2,18 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { authActions } from 'redux/actions'
+import { authActions, uiActions } from 'redux/actions'
 
 import App from 'components/App'
 
 class AppContainer extends React.Component {
   static propTypes = {
-    children  : PropTypes.element.isRequired
+    children     : PropTypes.element.isRequired,
+    reduxActions : PropTypes.object.isRequired
+  }
+
+  componentWillMount () {
+    this.props.reduxActions.auth.getUserRequest()
   }
 
   render () {
@@ -21,6 +26,7 @@ class AppContainer extends React.Component {
 function mapStateToProps (state) {
   return {
     reduxState: {
+      coreui    : state.ui,
       account   : state.account
     }
   }
@@ -29,7 +35,8 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     reduxActions : {
-      auth  : bindActionCreators(authActions, dispatch)
+      coreui : bindActionCreators(uiActions, dispatch),
+      auth   : bindActionCreators(authActions, dispatch)
     }
   }
 }

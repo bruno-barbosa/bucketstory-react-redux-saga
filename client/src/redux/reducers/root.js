@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
-import locationReducer from './location'
+import uiReducer from './ui'
 import authReducer from './auth'
+import locationReducer from './location'
 
 export const make = (asyncReducers) => {
   return combineReducers({
-    location   : locationReducer,
+    ui         : uiReducer,
     account    : authReducer,
+    location   : locationReducer,
     form       : formReducer,
     ...asyncReducers
   })

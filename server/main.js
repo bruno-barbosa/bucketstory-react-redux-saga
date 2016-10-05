@@ -9,6 +9,7 @@ import bodyParser from 'body-parser'
 import compression from 'compression'
 
 // Passport and session dependencies imports
+import cors from 'cors'
 import passport from 'passport'
 import mongoStore from 'connect-mongo'
 import session from 'express-session'
@@ -58,17 +59,16 @@ app.use(helmet())
 app.use(compression())
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(validator())
 app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: process.env.SESSION_SECRET,
-  store: new MongoStore({
-    url: process.env.MONGODB_URI,
-    autoReconnect: true,
-    autoRemove: 'native'
-  })
+  resave            : true,
+  saveUninitialized : false,
+  secret            : process.env.SESSION_SECRET,
+  store             : new MongoStore({
+    url            : process.env.MONGODB_URI,
+    autoReconnect  : true
+    })
 }))
 
 // ========================================================
@@ -122,6 +122,6 @@ if (config.env === 'development') {
 }
 
 // Initialize api routes
-app.use('/', indexRoute)
+app.use('/', cors(), indexRoute)
 
 export default app

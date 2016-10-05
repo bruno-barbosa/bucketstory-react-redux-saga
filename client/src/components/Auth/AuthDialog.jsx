@@ -7,10 +7,10 @@ const AuthDialog = (props) => {
   require('./auth.scss')
 
   return (
-    <Dialog className='auth-dialog__container' open={props.authBoolean} >
+    <Dialog className='auth-dialog__container' open={props.authDialog} >
       <IconButton
         className='auth-tab__button-close'
-        onClick={props.handleToggle}
+        onClick={() => props.handleToggle(false)}
         name='close' />
       <DialogTitle>
         <MDLComponent>
@@ -35,7 +35,7 @@ const AuthDialog = (props) => {
 }
 
 AuthDialog.propTypes = {
-  authBoolean     : PropTypes.bool.isRequired,
+  authDialog      : PropTypes.bool.isRequired,
   activeTab       : PropTypes.number.isRequired,
   handleToggle    : PropTypes.func.isRequired,
   handleTabChange : PropTypes.func.isRequired,
