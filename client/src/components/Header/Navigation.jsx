@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import { Navigation, Menu, MenuItem, Button, Textfield } from 'react-mdl'
 import { publicMenu, authMenu } from './MenuList'
 
-const NavigationComponent = ({ handleToggle, userAccount }) => {
+const NavigationComponent = ({ handleToggle, handleLogout, userAccount }) => {
   require('./header.scss')
 
   return (
@@ -54,8 +54,8 @@ const NavigationComponent = ({ handleToggle, userAccount }) => {
             id='avatar'
           />
           <Menu className='header-avatar__menu'target='avatar' align='right'>
-            <MenuItem>Profile</MenuItem>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem><Link to='/profile'>Profile</Link></MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       }
@@ -65,6 +65,7 @@ const NavigationComponent = ({ handleToggle, userAccount }) => {
 
 NavigationComponent.propTypes = {
   handleToggle  : PropTypes.func.isRequired,
+  handleLogout  : PropTypes.func.isRequired,
   userAccount   : PropTypes.object.isRequired
 }
 

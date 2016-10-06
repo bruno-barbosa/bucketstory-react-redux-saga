@@ -3,7 +3,8 @@ import { uiTypes } from 'redux/constants'
 const uiState = {
   header : {
     authDialog : false
-  }
+  },
+  notifications : []
 }
 
 export default function uiReducer (state = uiState, action) {

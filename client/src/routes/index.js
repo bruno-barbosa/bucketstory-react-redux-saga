@@ -1,10 +1,18 @@
 
 import App from 'containers/App'
 import Home from 'routes/Home'
+import Profile from 'routes/Profile'
 /*
   NOTE: Instead of using JSX, react-router
         PlainRoute objects are used to build route definitions.
  */
+const requireAuth = (store) => (nextState) => {
+  const state = store.getState()
+  if (!state.account.authenticated) {
+    const uiActions = require('redux/actions').uiActions
+    store.dispatch(uiActions.authToggle(true))
+  }
+}
 
 export const createRoutes = (store) => ({
   path        : '/',
@@ -12,14 +20,13 @@ export const createRoutes = (store) => ({
   indexRoute  : Home,
   childRoutes : [
     // Auth routes
-    // {
-    //   component   : Auth,
-    //   onEnter     : requireAuth,
-    //   indexRoute  : Home,
-    //   childRoutes : [
-    //     ProfileRoute(store)
-    //   ]
-    // },
+    {
+      onEnter     : requireAuth(store),
+      // indexRoute  : Profile,
+      childRoutes : [
+        Profile(store)
+      ]
+    }
     // Non Auth Routes
     // HelpRoute,
     // ContactRoute

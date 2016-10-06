@@ -14,6 +14,7 @@ const HeaderComponent = (props) => {
       }>
       <Navigation
         handleToggle={props.reduxActions.coreui.authToggle}
+        handleLogout={props.reduxActions.auth.logoutRequest}
         userAccount={props.reduxState.account}
         routes={props.reduxRoutes}
         />

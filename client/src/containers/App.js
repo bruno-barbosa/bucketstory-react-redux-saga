@@ -17,6 +17,7 @@ class AppContainer extends React.Component {
   }
 
   render () {
+    console.log(this.props)
     return (
       <App children={this.props.children} {...this.props} />
     )

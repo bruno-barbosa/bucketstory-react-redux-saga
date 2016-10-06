@@ -63,11 +63,12 @@ const authApi = {
 
   logout () {
     return fetch(`${API_URL}/auth/local/logout`, {
-      method  : 'DELETE',
-      headers : {
+      method      : 'DELETE',
+      headers     : {
         'Accept'        : 'application/json',
         'Content-Type'  : 'application/json'
-      }
+      },
+      credentials : 'same-origin'
     })
     .then(statusHelper)
     .then(response => response.json())

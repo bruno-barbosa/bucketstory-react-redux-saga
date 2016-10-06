@@ -18,7 +18,7 @@ export function getUserSuccess (payload) {
 }
 
 export function getUserFailure (payload) {
-  return { type: authTypes.GETUSER_FAILURE, payload}
+  return { type: authTypes.GETUSER_FAILURE, payload }
 }
 
 export function loginRequest (payload) {
@@ -45,8 +45,8 @@ export function registerFailure (payload) {
   return { type: authTypes.REGISTER_FAILURE, payload }
 }
 
-export function logoutRequest (payload) {
-  return { type: authTypes.LOGOUT_REQUEST, payload }
+export function logoutRequest () {
+  return { type: authTypes.LOGOUT_REQUEST }
 }
 
 export function logoutSuccess () {

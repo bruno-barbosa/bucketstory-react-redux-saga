@@ -1,7 +1,7 @@
 import { call, fork, put, take } from 'redux-saga/effects'
 
 import { authApi } from 'utils/api'
-import { authTypes } from 'redux/constants'
+import { authTypes, uiTypes } from 'redux/constants'
 
 // ======================================================
 // Sagas

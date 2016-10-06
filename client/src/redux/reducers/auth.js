@@ -45,6 +45,9 @@ export default function authReducer (state = authState, action) {
     case authTypes.REGISTER_FAILURE:
       return { ...state, error: action.payload.error, authenticated: false, sendingRequest: false }
 
+    case authTypes.LOGOUT_SUCCESS:
+      return { ...state, profile: {}, authenticated: false }
+
     default:
       return state
   }
